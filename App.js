@@ -1,31 +1,34 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
 // this is the root component all components must be inside it. Like index.html
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={{ margin:16, borderWidth: 2, borderColor: 'red', padding:16 }}> Another text</Text>
-      <Text 
-        style={styles.dummyText}>
-        Hola Mundo!!!
-      </Text>
-      <Button title='Tap me' />
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+          <TextInput style={styles.textInput} placeholder='Your course goal!' />
+          <Button title='Add Goal'/>
+      </View>
+      <View>
+          <Text> List of goals...</Text>
+      </View>
     </View>
   );
 }
 
 // this is the style of app above since react native does not use CSS. Style objects, not inline style
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  appContainer: {
+    padding:50,
   },
-  dummyText: {
-    margin:16,
-    borderWidth: 2,
-    borderColor: 'blue',
-    padding:16,
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#ccccc',
+    width: '80%',
+    margin: 8,
+    padding: 8,
   }
 });
