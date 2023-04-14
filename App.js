@@ -26,9 +26,15 @@ export default function App() {
   // add goal to list
   function addGoalHandler(){
     console.log("clicked button value = " + EnteredGoalText);
-    // optional, use modern react (...) => SetCourseGoals([...courseGoals, EnteredGoalText]);
-    SetCourseGoals(currentCourseGoals => [...currentCourseGoals, EnteredGoalText]);
+    // optional, use modern react (...) -> SetCourseGoals([...courseGoals, EnteredGoalText]);
+    // rendering list without keys. below see, with keys SetCourseGoals(currentCourseGoals => [...currentCourseGoals, EnteredGoalText]);
     //currentCourseGoals is automatically provided by react (useState I think)
+
+    // rendering with keys
+    SetCourseGoals(currentCourseGoals => [
+      ...currentCourseGoals,
+      {text: EnteredGoalText, id: Math.random().toString()}
+    ]);
   };
 
   return (
@@ -43,27 +49,32 @@ export default function App() {
       </View>
       <View style={styles.goalsContainer}>
         <Text> FlatList = loads list items as you scrolldown...</Text>
-        <FlatList data={courseGoals}
+        <FlatList
+          data={courseGoals}
           /* renderItem and itemData are from flatList. itemData is each Item from the array/list and some metadata */
           renderItem={(itemData) => {
             // itemData.index is built in from FlatList too
-            itemData.index
+            // itemData.index
             return (
               <View style={styles.goalItem} >
-                <Text style={styles.goalText} >Goal x = {itemData.item}</Text>
+                <Text style={styles.goalText} >Goal key = x = {itemData.item.text}</Text>
               </View>
             );
           }}
-          
+          // if your data does not have a key because the API does not have it, you can make a key without changing the data.
+          // item and index are automatic passed by flat list. making id=key.
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
           alwaysBounceVertical={false} />
 
         <Text> ScrollView example (loads all list items at once even if they do not show on the screen) ...</Text>
-        <ScrollView>
+        {/* <ScrollView>
             {courseGoals.map((goal) => 
               <View style={styles.goalItem} key={'key' + goal}>
                 <Text style={styles.goalText} >Goal x = {goal}</Text>
               </View>)}
-        </ScrollView>
+        </ScrollView> */}
       </View>
     </View>
   );
