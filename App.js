@@ -4,49 +4,34 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TextInput,
   FlatList
   } from 'react-native';
 import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 // this is the root component all components must be inside it. Like index.html
 export default function App() {
-  // enteredGoalText is the Key, setEnteredGoalText is the value of the key.
-  const [EnteredGoalText, setEnteredGoalText] = useState('');
   // constant is an empty array to store the list of goals.
   const[courseGoals, SetCourseGoals] = useState([])
 
-  //input field goal handler
-  function goalInputHandler(enteredText) {
-    console.log("enteredText = " + enteredText)
-    setEnteredGoalText(enteredText);
-  };
-
   // add goal to list
-  function addGoalHandler(){
-    console.log("clicked button value = " + EnteredGoalText);
+  function addGoalHandler(enteredGoalText){
+    console.log("clicked button value = " + enteredGoalText);
     // optional, use modern react (...) -> SetCourseGoals([...courseGoals, EnteredGoalText]);
     // rendering list without keys. below see, with keys SetCourseGoals(currentCourseGoals => [...currentCourseGoals, EnteredGoalText]);
     //currentCourseGoals is automatically provided by react (useState I think)
 
     // rendering with keys
     SetCourseGoals(currentCourseGoals => [
-      ...currentCourseGoals,
-      {text: EnteredGoalText, id: Math.random().toString()}
+        ...currentCourseGoals,
+        {text: enteredGoalText, id: Math.random().toString()}
     ]);
   };
+  
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-          <TextInput 
-            style={styles.textInput}
-            placeholder='Your course goal!'
-            onChangeText={goalInputHandler}
-            />
-          <Button title='Add Goal' onPress={addGoalHandler}/>
-      </View>
+      <GoalInput onAddGoal={addGoalHandler}/>
       <View style={styles.goalsContainer}>
         <Text> FlatList = loads list items as you scrolldown...</Text>
         <FlatList
@@ -84,24 +69,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 16
   },
-  inputContainer: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
-    borderBottomWidth:1,
-    borderBottomColor: "#cccccc"
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    width: '70%',
-    margin: 8,
-    padding: 8,
-  },
   goalsContainer : {
     flex: 5,
   },
-  
 });
