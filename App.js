@@ -6,9 +6,9 @@ import {
   View,
   Button,
   TextInput,
-  ScrollView,
   FlatList
   } from 'react-native';
+import GoalItem from './components/GoalItem';
 
 // this is the root component all components must be inside it. Like index.html
 export default function App() {
@@ -53,13 +53,8 @@ export default function App() {
           data={courseGoals}
           /* renderItem and itemData are from flatList. itemData is each Item from the array/list and some metadata */
           renderItem={(itemData) => {
-            // itemData.index is built in from FlatList too
-            // itemData.index
-            return (
-              <View style={styles.goalItem} >
-                <Text style={styles.goalText} >Goal key = x = {itemData.item.text}</Text>
-              </View>
-            );
+            // <GoalItem /> is a custom component
+            return <GoalItem text={itemData.item.text} />;
           }}
           // if your data does not have a key because the API does not have it, you can make a key without changing the data.
           // item and index are automatic passed by flat list. making id=key.
@@ -69,7 +64,8 @@ export default function App() {
           alwaysBounceVertical={false} />
 
         <Text> ScrollView example (loads all list items at once even if they do not show on the screen) ...</Text>
-        {/* <ScrollView>
+       {/* // maybe change key for id
+        <ScrollView>
             {courseGoals.map((goal) => 
               <View style={styles.goalItem} key={'key' + goal}>
                 <Text style={styles.goalText} >Goal x = {goal}</Text>
@@ -107,14 +103,5 @@ const styles = StyleSheet.create({
   goalsContainer : {
     flex: 5,
   },
-  goalItem: {
-    margin: 8,
-    padding:8,
-    borderRadius: 6,
-    borderWidth: 1,
-    backgroundColor: '#5e0acc',
-  },
-  goalText: {
-    color: 'white',
-  }
+  
 });
