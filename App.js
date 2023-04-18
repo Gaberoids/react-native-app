@@ -27,6 +27,10 @@ export default function App() {
         {text: enteredGoalText, id: Math.random().toString()}
     ]);
   };
+
+  function deleteGoalHandler() {
+    console.log('DELETE');
+  }
   
 
   return (
@@ -39,11 +43,14 @@ export default function App() {
           /* renderItem and itemData are from flatList. itemData is each Item from the array/list and some metadata */
           renderItem={(itemData) => {
             // <GoalItem /> is a custom component
-            return <GoalItem text={itemData.item.text} />;
+            return <GoalItem
+              text={itemData.item.text}
+              onDeleteItem={deleteGoalHandler}/>;
           }}
           // if your data does not have a key because the API does not have it, you can make a key without changing the data.
-          // item and index are automatic passed by flat list. making id=key.
+          // "item" and "index" are automatic passed by flat list. making id=key.
           keyExtractor={(item, index) => {
+            console.log ("item = " + item + "  /// index = " + index)
             return item.id;
           }}
           alwaysBounceVertical={false} />
