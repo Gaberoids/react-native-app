@@ -28,8 +28,15 @@ export default function App() {
     ]);
   };
 
-  function deleteGoalHandler() {
+  // function to delete item from list as you press on it
+  function deleteGoalHandler(id) {
     console.log('DELETE');
+    SetCourseGoals(currentCourseGoals => {
+      // the filter will remove from array any item that does not match to id pressed.
+      return currentCourseGoals.filter(
+        (goal) => goal.id !== id
+        );
+    });
   }
   
 
@@ -45,6 +52,8 @@ export default function App() {
             // <GoalItem /> is a custom component
             return <GoalItem
               text={itemData.item.text}
+              id={itemData.item.id}
+              //onDeleteItem is made up because GoalItem is a component that we made up too.
               onDeleteItem={deleteGoalHandler}/>;
           }}
           // if your data does not have a key because the API does not have it, you can make a key without changing the data.
