@@ -4,15 +4,22 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList
+  FlatList,
+  Button
   } from 'react-native';
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 
 // this is the root component all components must be inside it. Like index.html
 export default function App() {
+  // Const to open the modal
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   // constant is an empty array to store the list of goals.
   const[courseGoals, SetCourseGoals] = useState([])
+
+  function startAddGoalHandler() {
+    setModalIsVisible(true);
+  }
 
   // add goal to list
   function addGoalHandler(enteredGoalText){
@@ -42,7 +49,14 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addGoalHandler}/>
+      {/* button that opens the modal */}
+      <Button 
+        title="Add New Goal"
+        color="#5e0acc"
+        onPress={startAddGoalHandler}
+      />
+
+      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
         <Text> FlatList = loads list items as you scrolldown...</Text>
         <FlatList
