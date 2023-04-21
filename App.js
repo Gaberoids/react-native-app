@@ -7,6 +7,8 @@ import {
   FlatList,
   Button
   } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 
@@ -54,11 +56,15 @@ export default function App() {
   
 
   return (
+    // because statusbar and view are sibling components, they cant be side by side without <></>
+    <>
+    {/* making the status bar of iphone change color (time, battery, wifi icons) */}
+    <StatusBar style="light" />
     <View style={styles.appContainer}>
       {/* button that opens the modal */}
       <Button 
         title="Add New Goal"
-        color="#5e0acc"
+        color="#a065ec"
         onPress={startAddGoalHandler}
       />
 
@@ -98,6 +104,7 @@ export default function App() {
         </ScrollView> */}
       </View>
     </View>
+    </>
   );
 }
 
@@ -107,7 +114,7 @@ const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
     paddingTop: 50,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   goalsContainer : {
     flex: 5,
