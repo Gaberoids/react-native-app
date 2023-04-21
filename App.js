@@ -21,6 +21,10 @@ export default function App() {
     setModalIsVisible(true);
   }
 
+  function endAddGoalHandler() {
+    setModalIsVisible(false);
+  }
+
   // add goal to list
   function addGoalHandler(enteredGoalText){
     console.log("clicked button value = " + enteredGoalText);
@@ -33,6 +37,8 @@ export default function App() {
         ...currentCourseGoals,
         {text: enteredGoalText, id: Math.random().toString()}
     ]);
+    // Or endAddGoalHandler(); Or ... below
+    setModalIsVisible(false);
   };
 
   // function to delete item from list as you press on it
@@ -56,7 +62,11 @@ export default function App() {
         onPress={startAddGoalHandler}
       />
 
-      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
+      <GoalInput
+        visible={modalIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandler}
+        />
       <View style={styles.goalsContainer}>
         <Text> FlatList = loads list items as you scrolldown...</Text>
         <FlatList
